@@ -40,6 +40,8 @@ Custom Dockerfile implementations allow you to:
     Use alternative build definitions, or create your own
 
 ```
+
+```
 {
   "bip": "172.100.0.1/24",
   "data-root": "/mnt/data",
@@ -52,7 +54,56 @@ Custom Dockerfile implementations allow you to:
     "max-size": "10m"
   }
 }
-
 ```
 
+making extension:
 
+structure of extension
+
+![making extension](pic/image.png)
+
+
+part 3 would be HTML and CSS files
+metadata config eg:
+
+```
+{
+  "ui": {
+    "dashboard-tab": {
+      "title": "Minimal frontend",
+      "root": "/ui",
+      "src": "index.html"
+    }
+  }
+}
+```
+docker run --init?
+the --init option in Docker provides a lightweight solution to handle the proper reaping of child processes when the container exits, especially when the main process in the container is not well-designed to handle this itself
+
+for multi service container(more than one process in container):
+https://docs.docker.com/config/containers/multi-service_container/
+
+**Live restore during upgrades**
+Live restore allows you to keep containers running across Docker daemon updates, but is only supported when installing patch releases (YY.MM.x), not for major (YY.MM) daemon upgrades.
+
+## docker scout
+
+```
+docker scout enroll mehrdadbn9
+docker scout repo enable --org mehrdadbn9 mehrdadbn9/scout-demo
+docker scout cves --only-package express
+```
+
+![scout dashboard](pic/scout-dashboard.png)
+![docker-images-scout](pic/docker-images-scout.png)
+
+
+Two types of build annotations are available:
+
+Software Bill of Material (SBOM): list of software artifacts that an image contains, or that were used to build the image.
+Provenance: how an image was built.
+
+```
+docker build --push --tag <org>/<image:tag> --provenance=true --sbom=true .
+docker buildx build --sbom=true --provenance=true .
+```
